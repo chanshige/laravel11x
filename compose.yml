@@ -29,6 +29,7 @@ services:
       interval: 30s
       timeout: 3s
       retries: 3
+#    command: strace -f -s 1024 -y -ttT -o /var/www/storage/logs/trace.log php-fpm
 
   database:
     container_name: laravel11x_pgsql

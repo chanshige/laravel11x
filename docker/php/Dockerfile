@@ -1,8 +1,8 @@
 FROM php:8.3-fpm-alpine3.20
 LABEL maintainer="dev@shigeki.tokyo"
 
-COPY ./docker/php/conf.d/php.ini /usr/local/etc/php/
-COPY ./docker/php/conf.d/opcache.ini /usr/local/etc/php/conf.d/
+COPY ./docker/php/conf/php.ini $PHP_INI_DIR
+COPY ./docker/php/conf.d/* $PHP_INI_DIR/conf.d/
 COPY ./docker/php/php-fpm.d/zz-docker.conf /usr/local/etc/php-fpm.d/
 COPY ./docker/php/docker-healthcheck.sh /usr/local/bin/docker-healthcheck
 RUN chmod +x /usr/local/bin/docker-healthcheck
@@ -32,6 +32,7 @@ RUN apk upgrade --update \
   libwebp-dev \
   freetype-dev \
   exiftool \
+  strace \
   && pecl install crypto-0.3.2 apcu xdebug \
   && docker-php-ext-enable crypto apcu xdebug \
   && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
